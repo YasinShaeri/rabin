@@ -32,18 +32,32 @@ class VerifyAppChannelJwt
             $appChannel = AppChannel::find($app_channel_id);
 
             if (!$appChannel) {
-                return response()->json(['error' => 'Invalid app_channel_id'], 401);
+                return $this->apiResponse(null, 'Invalid app_channel_id', false, 401);
             }
 
             // بررسی تطابق secret_key
             if ($appChannel->secret_key !== $secret_key) {
-                return response()->json(['error' => 'Invalid secret key'], 401);
+                return $this->apiResponse(null, 'Invalid secret key', false, 401);
             }
+
+            // اضافه کردن app_channel_id به درخواست
+            $request->merge(['app_channel_id' => $app_channel_id]);
 
             return $next($request);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return $this->apiResponse(null, 'Unauthorized', false, 401);
         }
+    }
+
+    public function apiResponse($data = null, $message = null, $status = true, $statusCode = 200)
+    {
+        $response = [
+            'success' => $status,
+            'data' => $data,
+            'message' => $message,
+        ];
+
+        return response()->json($response, $statusCode);
     }
 }
 
