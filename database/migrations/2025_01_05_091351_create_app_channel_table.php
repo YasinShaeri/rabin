@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('app_id');
             $table->unsignedBigInteger('channel_id');
-            $table->string('jwt')->unique();
-            $table->timestamp('expire_time');
+            $table->string('secret_key')->unique();
+            // $table->timestamp('expire_time');
             $table->timestamps();
         });
     }

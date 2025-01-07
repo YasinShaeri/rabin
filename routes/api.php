@@ -20,15 +20,22 @@ use Tymon\JWTAuth\JWTAuth;
 
 
 Route::post('/generate-token', function (Request $request) {
+    //dd("ok");
+   // dd($request);
     $validated = $request->validate([
-        'app_channel_id' => 'required|exists:app_channel,id',
+        'app_channel_id' => 'required',
         'secret_key' => 'required',
     ]);
-
+//dd($validated );
     $appChannel = AppChannel::find($validated['app_channel_id']);
 
+    if (! $appChannel) {
+        return response()->json(['error' => 'Invalid app_channel_id'], 401);
+    }
+
+
     // بررسی secret_key
-    if ($appChannel->jwt !== $validated['secret_key']) {
+    if ($appChannel->secret_key !== $validated['secret_key']) {
         return response()->json(['error' => 'Invalid credentials'], 401);
     }
 
@@ -36,22 +43,18 @@ Route::post('/generate-token', function (Request $request) {
     $payload = [
         'sub' => $appChannel->id, // subject
         'iat' => now()->timestamp, // زمان صدور
-        'exp' => now()->addHours(1)->timestamp, // زمان انقضا
+        'exp' => now()->addYear(1)->timestamp, // زمان انقضا
+        'app_channel_id' => $appChannel->id, // اضافه کردن app_channel_id به claims
+        'secret_key' => $appChannel->secret_key, // اضافه کردن secret_key به claims
     ];
-
+    
     // استفاده از JWTAuth فاساد برای ساخت توکن
     $token = \Tymon\JWTAuth\Facades\JWTAuth::class::claims($payload)->fromUser($appChannel);
-
-    // ذخیره توکن در مدل AppChannel
-    /*$appChannel->update([
-        'jwt' => $token,
-        'expire_time' => now()->addHours(1), // زمان انقضا
-    ]);*/
 
     return response()->json([
         'success' => true,
         'token' => $token,
-        /*'expires_at' => $appChannel->expire_time,*/
+        'expires_at' => $payload['exp'],
     ]);
 });
 
