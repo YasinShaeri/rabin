@@ -18,22 +18,46 @@ class VerifyAppChannelJwt
     public function handle($request, Closure $next)
     {
         try {
-            // استخراج توکن و اعتبارسنجی
-            $decoded = JWTAuth::parseToken()->getPayload();
+            // بررسی توکن JWT
+            $user = JWTAuth::parseToken()->authenticate();
 
-            // پیدا کردن AppChannel مرتبط با `sub` (subject)
-            $appChannel = AppChannel::find($decoded->get('sub'));
+            // دریافت payload از توکن
+            $tokenPayload = JWTAuth::parseToken()->getPayload();
 
-            if (!$appChannel || $appChannel->jwt !== JWTAuth::getToken() || now()->greaterThan($appChannel->expire_time)) {
-                throw new HttpResponseException(response()->json(['error' => 'Token is invalid or expired'], 401));
+            // استخراج app_channel_id و secret_key از payload توکن
+            $app_channel_id = $tokenPayload->get('app_channel_id');
+            $secret_key = $tokenPayload->get('secret_key');
+
+            // بررسی موجود بودن appChannel با app_channel_id
+            $appChannel = AppChannel::find($app_channel_id);
+
+            if (!$appChannel) {
+                return $this->apiResponse(null, 'Invalid app_channel_id', false, 401);
             }
 
-            // ذخیره اطلاعات app_channel در request
-            $request->merge(['app_channel' => $appChannel]);
-        } catch (\Exception $e) {
-            throw new HttpResponseException(response()->json(['error' => 'Token is invalid'], 401));
-        }
+            // بررسی تطابق secret_key
+            if ($appChannel->secret_key !== $secret_key) {
+                return $this->apiResponse(null, 'Invalid secret key', false, 401);
+            }
 
-        return $next($request);
+            // اضافه کردن app_channel_id به درخواست
+            $request->merge(['app_channel_id' => $app_channel_id]);
+
+            return $next($request);
+        } catch (\Exception $e) {
+            return $this->apiResponse(null, 'Unauthorized', false, 401);
+        }
+    }
+
+    public function apiResponse($data = null, $message = null, $status = true, $statusCode = 200)
+    {
+        $response = [
+            'success' => $status,
+            'data' => $data,
+            'message' => $message,
+        ];
+
+        return response()->json($response, $statusCode);
     }
 }
+

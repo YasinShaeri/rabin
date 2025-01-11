@@ -17,7 +17,7 @@ class AppChannel extends Model implements JWTSubject
     protected $fillable = [
         'app_id',
         'channel_id',
-        'jwt',
+        'secret_key',
         'expire_time'
     ];
 
