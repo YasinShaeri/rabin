@@ -31,11 +31,12 @@ class TicketController extends Controller
         );
 
         // ایجاد تیکت جدید
+        $appChannelId = $request->get('app_channel_id');
         $ticket = Ticket::create([
             'client_id' => $client->id,
             'ticket_status_id' => 1,  // فرض بر اینکه وضعیت تیکت پیش‌فرض 1 است
             'priority_id' => $validated['priority_id'],
-            'app_channel_id' => $validated['category_id'],  // فرض بر اینکه این اشتباه نباشد، یا آن را تنظیم کنید
+            'app_channel_id' => $appChannelId,  // فرض بر اینکه این اشتباه نباشد، یا آن را تنظیم کنید
             'app_channel_category_id' => $validated['category_id'],
             'title' => $validated['title'],
         ]);
