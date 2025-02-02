@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>پنل ادمین</title>
+    <title>پنل مدیریت رابین</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="shortcut icon" href="{{ asset('rabin.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('rabin.ico') }}">
 
     <link rel="stylesheet" href="/font/iconsmind-s/css/iconsminds.css"/>
     <link rel="stylesheet" href="/font/simple-line-icons/css/simple-line-icons.css"/>
