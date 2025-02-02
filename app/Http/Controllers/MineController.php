@@ -15,8 +15,8 @@ class MineController extends Controller
         return view('admin.index');
     }
     public function ticket(){
-        $tickets = Ticket::get();
-        return view('admin.ticket.list' , compact('tickets'));
+        $tickets = Ticket::paginate(5);
+        return view('admin.ticket.list', compact('tickets'));
     }
     public function ticketShow($ticket, Request $request){
         $ticket = Ticket::where('id',$ticket)->first();

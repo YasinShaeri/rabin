@@ -39,20 +39,23 @@
 
                             <td>
                                 @if($product->ticketStatus->id == 1)
-                                    <span class="badge bg-success" style="font-size: 100%;color: #fff">{{$product->ticketStatus->title}}</span>
+                                    <span class="badge bg-success" style="font-size: 100%;color: #fff">باز</span>
                                 @else
-                                    <span class="badge bg-danger" style="font-size: 100%;color: #fff">{{$product->ticketStatus->title}}</span>
+                                    <span class="badge bg-danger" style="font-size: 100%;color: #fff">بسته</span>
                                 @endif
                             </td>
 
                             <td>{{$product->appChannel->app->title}}</td>
                             <td>{{$product->appChannel->channel->title}}</td>
 
-                            <td><a href="{{ route('ticket.show', ['ticket' => $product->id]) }}">ورود به چت</a></td>
+                            <td class="d-flex"><a class="link-icon" href="{{ route('ticket.show', ['ticket' => $product->id]) }}">ورود به چت</a></td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                    {{ $tickets->links() }}
+                </div>
             </div>
         </div>
     </div>
