@@ -22,7 +22,7 @@ Route::get('/', function () {
 // احراز هویت
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login.post');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::any('logout', [AuthController::class, 'logout'])->name('logout');
 
 // داشبورد
 Route::prefix('dashboard')->middleware('auth')->group(function () {

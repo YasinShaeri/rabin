@@ -9,10 +9,10 @@
                     <div class="card auth-card">
                         <div class="position-relative image-side d-flex flex-column justify-content-end">
 
-                            <p class=" text-white h2">سامانه رابین تیکتینگ</p>
+                            <p class=" text-white h2" style="font-weight: bold;font-size: 30px;">سامانه رابین تیکتینگ</p>
 
-                            <p class="white mb-0">
-                                شرکت تجارت الکترونیک پرتیکان.
+                            <p class="white mb-0" style="font-weight: bold;font-size: 15px;">
+                                شرکت تجارت الکترونیک پرتیکان
                                 {{-- <br>If you are not a member, please
                                 <a href="#" class="white">register</a>. --}}
                             </p>
@@ -34,25 +34,25 @@
                                     <input class="form-control" type="password" name="password" required />
                                     <span>رمز عبور</span>
                                 </label>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <button class="btn btn-primary btn-lg btn-shadow" type="submit">LOGIN</button>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <button class="btn btn-primary btn-lg btn-shadow" type="submit">ورود</button>
                                 </div>
                             </form>
                             @if(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+                                <div class="alert alert-success mt-4">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
 
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                            @if($errors->any())
+                                <div class="alert alert-danger mt-4">
+                                    <ul>
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

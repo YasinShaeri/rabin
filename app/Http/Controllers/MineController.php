@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\File;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MineController extends Controller
 {
@@ -33,7 +34,7 @@ class MineController extends Controller
 
         // ایجاد پیام جدید
         $ticket->messages()->create([
-            'user_id' => 1,
+            'user_id' => Auth::user()->id,
             'description' => $request->input('message'),
         ]);
 
