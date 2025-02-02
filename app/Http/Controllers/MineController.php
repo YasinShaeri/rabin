@@ -15,7 +15,7 @@ class MineController extends Controller
         return view('admin.index');
     }
     public function ticket(){
-        $tickets = Ticket::paginate(15);
+        $tickets = Ticket::paginate(10);
         return view('admin.ticket.list', compact('tickets'));
     }
     public function ticketShow($ticket, Request $request){
