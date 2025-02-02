@@ -30,6 +30,15 @@
     <link rel="stylesheet" href="/css/vendor/bootstrap-tagsinput.css" />
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/jquery.toast.min.css">
+
+    <style>
+        .link-icon{
+            background: var(--primary);
+            color: #fff;
+            padding: 2px 10px 2px 15px;
+            border-radius: 25px 0 0 25px;
+        }
+    </style>
 </head>
 
 <body id="app-container" class="menu-default show-spinner">
