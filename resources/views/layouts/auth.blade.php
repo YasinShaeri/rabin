@@ -21,6 +21,31 @@
             font-family: vazir;
         }
     </style>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // محو کردن پیام موفقیت
+            const successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                setTimeout(() => {
+                    successAlert.style.opacity = '0';
+                    setTimeout(() => {
+                        successAlert.style.display = 'none';
+                    }, 500); // زمان محو شدن
+                }, 3000); // زمان نمایش (3 ثانیه)
+            }
+
+            // محو کردن پیام خطا
+            const errorAlert = document.getElementById('error-alert');
+            if (errorAlert) {
+                setTimeout(() => {
+                    errorAlert.style.opacity = '0';
+                    setTimeout(() => {
+                        errorAlert.style.display = 'none';
+                    }, 500); // زمان محو شدن
+                }, 3000); // زمان نمایش (3 ثانیه)
+            }
+        });
+    </script>
 </head>
 <body class="background show-spinner no-footer">
 
